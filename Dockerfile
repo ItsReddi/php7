@@ -27,8 +27,12 @@ RUN echo "Europe/Berlin" > /etc/timezone
 RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN dpkg-reconfigure -f noninteractive tzdata
 
+COPY conf/php.ini /usr/local/etc/php/
+COPY conf/php-fpm.conf /usr/local/etc/
+COPY conf/www.conf /usr/local/etc/php-fpm.d/
+
 #ports
-EXPOSE 80
+#EXPOSE 80
 #EXPOSE 3306
 
 #onstart
