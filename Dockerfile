@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:7.1.1-fpm
 RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev unzip git
 RUN apt-get install -y \
         libfreetype6-dev \
@@ -23,17 +23,18 @@ RUN apt-get upgrade -y && \
 RUN rm -r /var/lib/apt/lists/*
 
 RUN composer global require "fxp/composer-asset-plugin:~1.1.1"
-RUN echo "Europe/Berlin" > /etc/timezone
-RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-RUN dpkg-reconfigure -f noninteractive tzdata
+
+###Timezone tricks
+#RUN echo "Europe/Berlin" > /etc/timezone
+#RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+#RUN dpkg-reconfigure -f noninteractive tzdata
 
 COPY conf/php.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
 
 #ports
-#EXPOSE 80
-#EXPOSE 3306
+EXPOSE 9000
 
 #onstart
 #CMD ["/bin/bash", "/init.sh"]
