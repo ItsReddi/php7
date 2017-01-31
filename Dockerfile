@@ -32,6 +32,7 @@ RUN composer global require "fxp/composer-asset-plugin:~1.1.1"
 COPY conf/php.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
+COPY conf/extensions/docker-php-ext-opcache.ini /usr/local/etc/conf.d/docker-php-ext-opcache.ini
 
 #ports
 EXPOSE 9000
