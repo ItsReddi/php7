@@ -36,6 +36,3 @@ COPY conf/extensions/docker-php-ext-opcache.ini /usr/local/etc/conf.d/docker-php
 
 #ports
 EXPOSE 9000
-
-#onstart
-CMD ["/bin/bash", "/scripts/init.sh"]
