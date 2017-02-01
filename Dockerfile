@@ -22,7 +22,8 @@ RUN apt-get upgrade -y && \
 
 RUN rm -r /var/lib/apt/lists/*
 
-RUN composer global require "fxp/composer-asset-plugin:~1.1.1" && mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
+RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
+RUN sudo -u www-data composer global require "fxp/composer-asset-plugin:~1.2"
 
 ###Timezone tricks
 #RUN echo "Europe/Berlin" > /etc/timezone
