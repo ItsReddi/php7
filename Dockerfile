@@ -1,5 +1,5 @@
 FROM php:7.1.1-fpm
-RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev unzip git
+RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev unzip git sudo
 RUN apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -22,9 +22,7 @@ RUN apt-get upgrade -y && \
 
 RUN rm -r /var/lib/apt/lists/*
 
-RUN composer global require "fxp/composer-asset-plugin:~1.1.1"
-
-RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
+RUN composer global require "fxp/composer-asset-plugin:~1.1.1" && mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
 
 ###Timezone tricks
 #RUN echo "Europe/Berlin" > /etc/timezone
@@ -40,4 +38,4 @@ COPY conf/extensions/docker-php-ext-opcache.ini /usr/local/etc/conf.d/docker-php
 EXPOSE 9000
 
 #onstart
-#CMD ["/bin/bash", "/init.sh"]
+CMD ["/bin/bash", "/scripts/init.sh"]
