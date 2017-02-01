@@ -24,6 +24,8 @@ RUN rm -r /var/lib/apt/lists/*
 
 RUN composer global require "fxp/composer-asset-plugin:~1.1.1"
 
+RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
+
 ###Timezone tricks
 #RUN echo "Europe/Berlin" > /etc/timezone
 #RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
