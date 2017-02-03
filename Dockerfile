@@ -1,4 +1,4 @@
-FROM php:7.1.1-fpm
+FROM php:7.0.15-fpm
 RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev unzip git sudo
 RUN apt-get install -y \
         libfreetype6-dev \
@@ -22,8 +22,8 @@ RUN apt-get upgrade -y && \
 
 RUN rm -r /var/lib/apt/lists/*
 
-RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
-RUN sudo -u www-data composer global require "fxp/composer-asset-plugin:~1.2"
+#RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
+#RUN sudo -u www-data composer global require "fxp/composer-asset-plugin:~1.2"
 
 ###Timezone tricks
 #RUN echo "Europe/Berlin" > /etc/timezone
