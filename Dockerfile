@@ -22,8 +22,8 @@ RUN apt-get upgrade -y && \
 
 RUN rm -r /var/lib/apt/lists/*
 
-#RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
-#RUN sudo -u www-data composer global require "fxp/composer-asset-plugin:~1.2"
+RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
+RUN sudo -u www-data composer global require "fxp/composer-asset-plugin:~1.2"
 
 ###Timezone tricks
 #RUN echo "Europe/Berlin" > /etc/timezone
@@ -33,7 +33,7 @@ RUN rm -r /var/lib/apt/lists/*
 COPY conf/php.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
-COPY conf/extensions/docker-php-ext-opcache.ini /usr/local/etc/conf.d/docker-php-ext-opcache.ini
+COPY conf/extensions/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 #ports
 EXPOSE 9000
