@@ -14,6 +14,13 @@ RUN apt-get install -y \
     && docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
     && docker-php-ext-install -j$(nproc) imap
 
+#PHP REDIS
+ENV PHPREDIS_VERSION 3.0.0
+RUN mkdir -p /usr/src/php/ext/redis \
+    && curl -L https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \
+    && echo 'redis' >> /usr/src/php-available-exts \
+    && docker-php-ext-install redis
+
 RUN apt-get install -y curl && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -33,7 +40,13 @@ RUN sudo -u www-data composer global require "fxp/composer-asset-plugin:~1.2"
 COPY conf/php.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
-COPY conf/extensions/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
+
+###Environments defaults
+ENV PHP_SESSION_SAVE_HANDLER files
+ENV PHP_SESSION_SAVE_PATH /tmp
+ENV PHP_OP_CACHE_ENABLE 1
+ENV PHP_OP_CACHE_REVALIDATE_FREQ 600
 
 #ports
 EXPOSE 9000
