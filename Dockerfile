@@ -6,7 +6,7 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts
 
 RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recommends -y \
-        unzip git sudo ntp \
+        unzip git sudo ntp openssh-client \
         libc-client-dev \ 
         libkrb5-dev \
         libfreetype6-dev \
