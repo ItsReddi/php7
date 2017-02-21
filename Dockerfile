@@ -1,4 +1,4 @@
-FROM php:7.0.15-fpm-alpine
+FROM php:7.0.16-fpm-alpine
 
 ###Environments defaults
 ENV PHP_SESSION_SAVE_HANDLER files
