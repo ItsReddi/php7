@@ -1,4 +1,4 @@
-FROM php:7.0.15-fpm
+FROM php:7.0.17-fpm
 
 ENV PHPREDIS_VERSION 3.1.1
 RUN mkdir -p /usr/src/php/ext/redis \
@@ -6,7 +6,7 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts
 
 RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recommends -y \
-        unzip git sudo ntp \
+        unzip git sudo ntp ssh-client \
         libc-client-dev \ 
         libkrb5-dev \
         libfreetype6-dev \
