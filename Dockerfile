@@ -6,7 +6,7 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts
 
 RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recommends -y \
-        unzip git sudo ntp ssh-client cron \
+        cron \
         libc-client-dev \ 
         libkrb5-dev \
         libfreetype6-dev \
@@ -21,7 +21,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recomme
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
     && docker-php-ext-install -j$(nproc) imap \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && apt-get remove --purge -y g++\
     && apt-get autoremove -y \
     && apt-get clean \
