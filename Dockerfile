@@ -1,4 +1,4 @@
-FROM php:7.0.25-fpm
+FROM php:7.0.27-fpm
 
 ENV PHPREDIS_VERSION 3.1.4
 RUN mkdir -p /usr/src/php/ext/redis \
