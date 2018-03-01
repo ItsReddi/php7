@@ -15,9 +15,7 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts
 
 RUN apk upgrade --update \
-&& apk add --no-cache --virtual .app-deps \
-   cron \
-&& apk add --no-cache --virtual .dynamic-deps \
+&& apk add --no-cache --virtual .build-deps \
    freetype-dev \
    libjpeg-turbo-dev \
    libpng-dev \
@@ -27,10 +25,7 @@ RUN apk upgrade --update \
    krb5-dev \
    curl-dev \
    imap-dev \
-&& apk add --no-cache --virtual .build-deps \
-   autoconf \
-   g++ \
-   make \
+   $PHPIZE_DEPS \
 && docker-php-ext-install \ 
    iconv mcrypt mbstring mysqli pdo_mysql curl session zip intl opcache redis \
 && docker-php-ext-configure \
@@ -41,7 +36,14 @@ RUN apk upgrade --update \
    imap --with-imap-ssl --with-kerberos \
 && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 ##CLEANUP
-&& apk del .build-deps \
+&& runDeps="$( \
+        scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
+            | tr ',' '\n' \
+            | sort -u \
+            | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+    )" \
+&& apk add --no-cache --virtual .php-rundeps $runDeps \
+&& apk del .phpize-deps-configure .build-deps \
 && find / -type f -iname \*.apk-new -delete \
 && rm -rf /var/cache/apk/*
 
