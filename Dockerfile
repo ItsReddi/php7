@@ -55,6 +55,7 @@ RUN mkdir /var/www/.composer \
 #RUN dpkg-reconfigure -f noninteractive tzdata
 
 COPY conf/php.ini /usr/local/etc/php/
+COPY conf/php-cli.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
 
