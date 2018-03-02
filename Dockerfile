@@ -31,6 +31,9 @@ COPY conf/php-cli.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
 
+#Clear env directive correction
+RUN sed -i "s|clear_env\s*=\s*no|clear_env = yes|g" /usr/local/etc/php-fpm.d/docker.conf
+
 
 ###Environments defaults
 ENV PHP_SESSION_SAVE_HANDLER files
