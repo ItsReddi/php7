@@ -9,7 +9,6 @@ ENV PHP_OP_CACHE_SAVE_COMMENTS 1
 ENV PHP_TIMEZONE UTC
 ENV PHPREDIS_VERSION 3.1.4
 
-###Get redis php extension
 RUN mkdir -p /usr/src/php/ext/redis \
     && curl -L https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \
     && echo 'redis' >> /usr/src/php-available-exts
@@ -51,6 +50,9 @@ COPY conf/php.ini /usr/local/etc/php/
 COPY conf/php-cli.ini /usr/local/etc/php/
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
+
+#Clear env directive correction
+RUN sed -i "s|clear_env\s*=\s*no|clear_env = yes|g" /usr/local/etc/php-fpm.d/docker.conf
 
 #ports
 EXPOSE 9000
